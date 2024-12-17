@@ -54,3 +54,9 @@ A React application that generates recipes based on ingredients you have on hand
 - React + Vite
 - Hugging Face Inference API
 - react-markdown
+
+## 📝 Future Directions
+
+- Organize component directory structure
+- Implement loader during recipe fetch
+- Autoscroll to recipe post-generation
