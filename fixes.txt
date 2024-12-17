@@ -1,0 +1,28 @@
+To fix the toggle recipe functionality after moving the state, follow these steps:
+
+1. Pass setRecipeShown as a prop from Chef.jsx to IngredientsList.jsx:
+   - The state lives in Chef.jsx but the toggle function is in IngredientsList.jsx
+   - IngredientsList needs access to setRecipeShown to toggle it
+
+2. Update the IngredientsList component call in Chef.jsx to include setRecipeShown:
+   <IngredientsList 
+     key={ingredientsList.length} 
+     ingredients={ingredients}
+     ingredientsList={ingredientsList}
+     setRecipeShown={setRecipeShown}
+   />
+
+3. Now toggleRecipeShown() in IngredientsList.jsx will have access to setRecipeShown via props and can toggle the state as intended.
+
+The issue is a classic "lifting state up" React pattern - when a child component needs to modify state that lives in a parent component, the setter function must be passed down as a prop.
+
+REVIEW OF CURRENT CODE:
+- The toggleRecipeShown function in IngredientsList.jsx tries to use props.setRecipeShown, but this prop isn't being passed from Chef.jsx
+- The length check props.ingredientsList.length >= 3 might be unreliable since ingredientsList is the rendered JSX list items, not the raw ingredients array
+- Consider using props.ingredients.length >= 3 instead for the condition check
+- The key prop on IngredientsList in Chef.jsx is good for forcing re-renders, but might not be necessary in this case
+
+Required fixes:
+1. Add setRecipeShown to IngredientsList component call in Chef.jsx
+2. Change length check to use props.ingredients.length
+3. Consider adding PropTypes or TypeScript for better props validation
